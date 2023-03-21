@@ -18,7 +18,10 @@ const makeGalleryMarkup = galleryItems
 
 galleryContainer.insertAdjacentHTML("afterbegin", makeGalleryMarkup);
 
-let gallery = new SimpleLightbox(".gallery a");
+let gallery = new SimpleLightbox(".gallery a", {
+  captionsData: "alt",
+  captionDelay: "250",
+});
 // console.log(gallery);
-gallery.defaultOptions.captionsData = "alt";
-gallery.defaultOptions.captionDelay = "250";
+// gallery.defaultOptions.captionsData = "alt";
+// gallery.defaultOptions.captionDelay = "250";
