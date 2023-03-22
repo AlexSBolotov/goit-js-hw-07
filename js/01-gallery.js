@@ -3,10 +3,8 @@ import { galleryItems } from "./gallery-items.js";
 
 const galleryContainer = document.querySelector(".gallery");
 
-const createGalleryMarkup = galleryItems
-  .map(
-    ({ preview, original, description }) =>
-      `<li class="gallery__item">
+function templateItemMarkup({ preview, original, description }) {
+  return `<li class="gallery__item">
         <a class="gallery__link" href='${original}'>
             <img
             class="gallery__image"
@@ -15,11 +13,31 @@ const createGalleryMarkup = galleryItems
             alt='${description}'
             />
         </a>
-    </li>`
-  )
-  .join("");
+    </li>`;
+}
+function createGalleryMarkup(galleryItems) {
+  return galleryItems.map(templateItemMarkup).join("");
+}
+// const createGalleryMarkup = galleryItems //////// Отакий от клювий варіант вставляти одразу const
+//   .map(
+//     ({ preview, original, description }) =>
+//       `<li class="gallery__item">
+//         <a class="gallery__link" href='${original}'>
+//             <img
+//             class="gallery__image"
+//             src='${preview}'
+//             data-source='${original}'
+//             alt='${description}'
+//             />
+//         </a>
+//     </li>`
+//   )
+//   .join("");
 
-galleryContainer.insertAdjacentHTML("afterbegin", createGalleryMarkup);
+galleryContainer.insertAdjacentHTML(
+  "afterbegin",
+  createGalleryMarkup(galleryItems)
+);
 
 galleryContainer.addEventListener("click", openLargeImage);
 
@@ -34,9 +52,10 @@ function openLargeImage(event) {
     <img src="${event.target.dataset.source}" width="800" height="600">
 `,
     {
-      onShow: () => window.addEventListener("keydown", closeLargeImageByEscape),
+      onShow: () =>
+        document.addEventListener("keydown", closeLargeImageByEscape),
       onClose: () =>
-        window.removeEventListener("keydown", closeLargeImageByEscape),
+        document.removeEventListener("keydown", closeLargeImageByEscape),
     }
   );
 
